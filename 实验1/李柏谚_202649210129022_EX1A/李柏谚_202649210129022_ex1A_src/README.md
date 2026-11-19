@@ -38,7 +38,7 @@ python main.py
 或者：
 
 ```bat
-setup_env.bat      :: 创建 .venv 并安装依赖
+setup_env.bat      :: 检查 Python/PyQt5；已安装时不需要虚拟环境
 run.bat            :: 启动
 run_demo.bat       :: 直接打开 samples\demo.pcap
 run_tests.bat      :: 运行 54 个单元测试
@@ -133,6 +133,31 @@ $ python -m pytest
 - IP 分片不做完整重组；802.11 只解析到 MAC 层。
 - Python 解析在 1 Gbps 以上可能成为瓶颈；本实现定位教学与中小流量分析。
 - 抓包可能包含敏感信息，请仅在授权环境中使用。
+
+## 常见问题：setup_env 与虚拟环境
+
+`setup_env.bat` **不再强制创建 `.venv`**：它先检查当前 `python` 是否为 64 位 3.10+、是否已经能
+`import PyQt5`；如果系统 Python 已经具备依赖，就直接使用系统 Python，不再执行 `ensurepip` 和联网安装。
+
+如果之前已经生成过损坏的 `.venv`：
+
+- `run.bat` 会先检测 `.venv\Scripts\python.exe` 能否 `import PyQt5`；失败就自动回退到系统 `python`，
+  不会因为一个坏掉的虚拟环境而启动失败。
+- 可以直接删除源码目录下的 `.venv`，再重新运行 `setup_env.bat` 和 `run.bat`。
+- 如果看到 `pip-build-tracker-*`、`pip-install-*`、`pip-ephem-wheel-cache-*` 之类的目录，这是 pip
+  在 `%TEMP%` 不可写时留在当前目录的临时目录，可以直接删除；它们不影响源码。
+
+问题根源通常是：Windows 的 `python -m venv` 在创建环境时要运行 `ensurepip`，而 `ensurepip` 会在
+`%TEMP%` 下解压 pip wheel。如果 `%TEMP%` 指向权限受限的目录（例如某些沙箱/代理环境的临时目录），
+`ensurepip` 写入或清理失败，就会留下一个**没有 pip** 的 `.venv`，后续 `pip install PyQt5` 自然失败。
+旧脚本没有检查每一步的返回码，`run.bat` 又无条件优先使用 `.venv`，所以表现为“虚拟环境用不了，
+但系统 Python 可以跑”。现在的脚本已针对这两点修正。
+
+如果任何情况下环境仍不可用，最直接的运行方式是：
+
+```bat
+python main.py
+```
 
 ## 报告、视频与 Git
 

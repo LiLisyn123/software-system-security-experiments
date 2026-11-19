@@ -528,7 +528,7 @@ def build() -> Path:
         """李柏谚_202649210129022_ex1A_src/
 ├─ main.py                  启动入口
 ├─ requirements.txt         PyQt5 依赖
-├─ run.bat / setup_env.bat  直接运行 / 创建虚拟环境
+├─ run.bat / setup_env.bat  直接运行 / 环境检查
 ├─ netsniff/
 │  ├─ app.py                命令行参数与 QApplication
 │  ├─ model.py              Packet / Field / Layer / ParseContext
