@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+tests/_output/
+test_tmp/
+pytest-cache-files-*/
+.dsh-office-*/
+config.json
+build/
+dist/
+*.spec
+*.log
