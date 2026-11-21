@@ -162,7 +162,7 @@ python main.py
 ## 报告、视频与 Git
 
 - 实验报告：`../李柏谚_202649210129022_ex1A_report.docx` / `.pdf`（35 页）
-- 演示视频：`../李柏谚_202649210129022_ex1A_play.mp4`（30 秒，1600×900，H.264，中文字幕）
+- 演示视频：`../李柏谚_202649210129022_ex1A_play.mp4`（3 分 47 秒，1920×1080，HEVC/AAC，含中文讲解）
 - 代码仓库：https://github.com/LiLisyn123/software-system-security-experiments
 
 ## 致谢
